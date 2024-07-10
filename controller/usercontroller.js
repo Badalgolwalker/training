@@ -9,14 +9,14 @@ require("dotenv").config()
 
 
 exports.userhome = catchAsyncError(async (req, res, next) => {
-  // const user = await userModel.findById(req.id).exec()
-
+  const user = await userModel.findById(req.id).exec()
   res.json(user)
 
 })
 
 
 exports.usersignup = catchAsyncError(async (req, res, next) => {
+
  const User =  await userModel.findOne({email:req.body.email}).exec()
 if(User){
   return res.json("user already register")
@@ -38,22 +38,18 @@ exports.usersignin= catchAsyncError(async(req,res,next) =>{
     // res.json(user)
     gettoken(user,200,res)
 
+
 })
 
 exports.foregt = catchAsyncError(async(req,res,next) =>{
     const user = await userModel.findOne({email:req.body.email}).exec()
-    console.log(user)
+  
     if(!user)return next(new ErrorHandler("this emai is not exist in ourdtabase",404))
 
         const url = `${process.env.FRONTEND_URL}/password/${user._id}`
 
-     
-        
         sendmail(req,res,next,url)
-        user.resetPasswordToken = 1
-        await user.save()
-        
-        
+
         res.json({user,url})
 
 })

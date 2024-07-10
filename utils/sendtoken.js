@@ -8,4 +8,5 @@ exports.gettoken = (user,statusCode,res) =>{
     httpOnly:true
   }
   res.status(statusCode).cookie("token",token,options).json({success:true,id:user._id,token})
+
 }

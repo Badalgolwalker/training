@@ -9,11 +9,11 @@ exports.createSubcategory = catchAsyncError(async(req,res,next) =>{
   if(!category){
     return next (new Errorhandler("first create category",404))
   }
-  const subCategory = await subcategoryModel.findOne({name:req.body.categoryname}).exec()
+  const subCategory = await subcategoryModel.findOne({name:req.body.Subcategoryname}).exec()
   if(subCategory){
     return next (new Errorhandler("subcategory alraedy existr",401))
   }
-  const SubCategory = await new subcategoryModel({name:req.body.subcategoryName,
+  const SubCategory = await new subcategoryModel({name:req.body.Subcategoryname,
   categoryid:category._id  
 }).save()
  res.json(SubCategory)

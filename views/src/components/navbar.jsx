@@ -2,6 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const navbar = () => {
+  
+
+  const logout = async() =>{
+    const response = await axios.post("http://localhost:3000/user/signout")
+    console.log(response)
+  }
 
   return (
     <div>
@@ -12,6 +18,7 @@ const navbar = () => {
           <Link>About</Link>
           <Link>Contact</Link>
           <Link>Service</Link>
+     
         </div>
         <Link to="/update" className='text-2xl'> profile</Link>
 

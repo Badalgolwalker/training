@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { json, Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
 
 
@@ -24,8 +24,11 @@ if(!response){
   return;
 
 }
+
 const {data} = response
 if (data.success === true) {
+
+  localStorage.setItem("token",JSON.stringify(response.data.token))
   toast.success("Login successful");
   setTimeout(() => {
     navigate("/");
@@ -46,7 +49,7 @@ const callapi = async() =>{
 if(!response){
   toast.error("internal server error");
 }
-console.log(response)
+
   }catch(err){
     toast.error(err);
   }

@@ -40,6 +40,7 @@ app.use(cookieparser())
 app.use("/",require("./routes/userRoute"))
 app.use("/category",require("./routes/categoryroute"))
 app.use("/Subcategory",require("./routes/subCategory"))
+app.use("/product",require("./routes/productroute"))
 
 //errorhanlder
 const Errorhandler = require("./utils/errorhandler")
