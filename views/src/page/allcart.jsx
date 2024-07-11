@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const AllCart = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,6 +13,7 @@ const AllCart = () => {
         const response = await axios.get("http://localhost:3000/cart/read");
         if (response.data) {
           setProducts(response.data);
+          setLoading(false)
    
         }
       } catch (error) {
@@ -20,6 +22,9 @@ const AllCart = () => {
     };
     fetchData();
   }, []);
+  if(loading){
+return <h1 className='text-3xl font-bold m-4'>loading ......</h1>
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
