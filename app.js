@@ -41,6 +41,8 @@ app.use("/",require("./routes/userRoute"))
 app.use("/category",require("./routes/categoryroute"))
 app.use("/Subcategory",require("./routes/subCategory"))
 app.use("/product",require("./routes/productroute"))
+app.use("/cart",require("./routes/cartroute"))
+app.use("/orders",require("./routes/orderroute"))
 
 //errorhanlder
 const Errorhandler = require("./utils/errorhandler")

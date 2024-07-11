@@ -50,7 +50,7 @@ const RegisterPage = () => {
         toast.error("Registration failed");
       }
     } catch (err) {
-      console.error(err);
+      
       toast.error("Error occurred during registration");
     }
   };

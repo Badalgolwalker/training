@@ -14,7 +14,13 @@ exports.userhome = catchAsyncError(async (req, res, next) => {
 
 })
 
+exports.fetchuser = catchAsyncError(async (req, res, next) => {
 
+  const user = await userModel.findById(req.params.id).exec()
+
+  res.json(user)
+
+})
 exports.usersignup = catchAsyncError(async (req, res, next) => {
 
  const User =  await userModel.findOne({email:req.body.email}).exec()
@@ -27,6 +33,7 @@ gettoken(user,201,res)
 
 
 exports.usersignin= catchAsyncError(async(req,res,next) =>{
+ 
 
   const user = await userModel.findOne({email:req.body.email}).select("+password").exec()
 
@@ -35,27 +42,37 @@ exports.usersignin= catchAsyncError(async(req,res,next) =>{
   const isMatch = user.comparePassword(req.body.password)
   if(!isMatch) return next(new ErrorHandler("wrong creadentials",500))
 
+
+
     // res.json(user)
     gettoken(user,200,res)
 
 
 })
 
-exports.foregt = catchAsyncError(async(req,res,next) =>{
-    const user = await userModel.findOne({email:req.body.email}).exec()
-  
-    if(!user)return next(new ErrorHandler("this emai is not exist in ourdtabase",404))
+exports.foregt = catchAsyncError(async (req, res, next) => {
+  const user = await userModel.findOne({ email: req.body.email }).exec();
 
-        const url = `${process.env.FRONTEND_URL}/password/${user._id}`
+  if (!user) {
+      return next(new ErrorHandler("This email does not exist in our database", 404));
+  }
 
-        sendmail(req,res,next,url)
+  const url = `${process.env.FRONTEND_URL}/password/${user._id}`;
 
-        res.json({user,url})
+  // Assuming sendmail is a function that sends an email with the password reset link
+  sendmail(req, res, next, url);
 
-})
+  // Update resetPasswordToken field to '1' and save the user
+
+  res.json({ user, url });
+});
+
 
 exports.id = catchAsyncError(async(req,res,next) =>{
+  
   const user = await userModel.findById(req.params.id).exec()
+
+ 
 // if(user.resetPasswordToken == "1"){
 //   user.resetPasswordToken = "0"
   user.password = req.body.password
@@ -80,6 +97,7 @@ exports.userresetpassword = catchAsyncError(async(req,res,next) =>{
 
 
 exports.userupdate = catchAsyncError(async (req, res, next) => {
+  
   await userModel.findByIdAndUpdate(req.params.id,req.body).exec()
 res.status(200).json({
    success:true,

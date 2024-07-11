@@ -18,7 +18,7 @@ const CategoryCreate = () => {
       toast.success("Subcategory create succcessfully")
     }
     } catch (error) {
-      console.error("Error creating Subcategory:", error);
+     toast.error("Error creating Subcategory:");
     }
   };
 

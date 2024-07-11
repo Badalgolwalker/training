@@ -3,6 +3,7 @@ import { json, Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
 
 
+
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 const login = () => {
@@ -26,9 +27,12 @@ if(!response){
 }
 
 const {data} = response
+
 if (data.success === true) {
 
   localStorage.setItem("token",JSON.stringify(response.data.token))
+  localStorage.setItem("userId", response.data.id); // Save user ID to localStorage
+
   toast.success("Login successful");
   setTimeout(() => {
     navigate("/");
@@ -39,8 +43,8 @@ if (data.success === true) {
   toast.error("Login failed");
 }
 }catch(err){
-  console.error(err);
-  toast.error("Error occurred during login");
+
+  toast.error(err.response.data.message);
 }
 }
 const callapi = async() =>{

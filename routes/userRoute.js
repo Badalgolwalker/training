@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const { userhome, usersignup,usersignin,usersignout,foregt,id,userresetpassword,userupdate } = require("../controller/usercontroller")
+const { userhome, usersignup,usersignin,usersignout,foregt,id,userresetpassword,userupdate,fetchuser } = require("../controller/usercontroller")
 const { isAuthenticated } = require("../middleware/auth")
 
 router.get("/",isAuthenticated, userhome)
+router.get("/user/fetch/:id", fetchuser)
 
 //post user/signup
 router.post("/user/signup",usersignup)
@@ -28,7 +29,7 @@ router.post("/user/reset-password/:id",isAuthenticated, userresetpassword)
 
 
 //post/user/update/:id
-router.post("/user/update/:id",isAuthenticated,userupdate)
+router.post("/user/update/:id",userupdate)
 
 
 

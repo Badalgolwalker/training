@@ -13,6 +13,11 @@ if(Category){
 res.json(category)
 })
 
+exports.categoryfetch = catchAsyncError(async(req,res,next) =>{
+  const category = await categoryModel.find().exec()
+  res.json(category)
+})
+
 exports.update = catchAsyncError(async(req,res,next) =>{
 
 

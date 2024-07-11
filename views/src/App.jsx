@@ -6,11 +6,14 @@ import RegisterPgae from "./page/registerpage"
 import Home from './page/Home'
 import ForgetPassword from "./page/forgetpassword"
 import Password from "./page/password"
-import Edit from './page/edit'
+import Edituser from './page/edituser'
 import CreatrePRoduct from './page/creatrePRoduct'
 import Editproduct from './components/editproduct'
 import Categorycreate from './components/categorycreate'
 import Subcategorycrete from "./components/subcategorycreate"
+import Createcart from './components/createcart'
+import Allcart from './page/allcart'
+import CreateOrder from './page/createorder'
 
 const App = () => {
 
@@ -22,7 +25,7 @@ useEffect(() => {
 if(token){
   setisAuth(true)
 }
-console.log(isAuth)
+
 }, [])
 
   return (
@@ -35,11 +38,14 @@ console.log(isAuth)
        <Route path='/login' element={<Login />}/>
        <Route path='/forgetpasswordmail' element={<ForgetPassword />} />
        <Route path="/password/:userId" element={<Password />} />
-       <Route path="/update" element={<Edit />} />
+       <Route path="/update" element={<Edituser />} />
        <Route path="/createPRoduct" element={<CreatrePRoduct />} />
        <Route path="/editproduct/:id" element={<Editproduct />} />
        <Route path="/categorycreate" element={<Categorycreate />} />
        <Route path="/Subcategorycreate" element={<Subcategorycrete />} />
+       <Route path="/cartpage/:id" element={<Createcart />} />
+       <Route path="/allcart" element={<Allcart/>} />
+       <Route path="/createorder" element={<CreateOrder/>} />
        
 
      

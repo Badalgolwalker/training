@@ -24,9 +24,9 @@ if(response.data.message){
 setEmail("")
 
 }
-      // Handle success or any further logic here
+
     } catch (error) {
-      console.error(error);
+
       toast.error("Error occurred during password reset request");
     }
   };

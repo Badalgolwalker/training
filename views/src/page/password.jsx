@@ -28,7 +28,7 @@ setTimeout(() => {
   navigate("/login")
 }, 1500);
 }
-console.log(response)
+
     } catch (error) {
      
       toast.error("this link is invalid");

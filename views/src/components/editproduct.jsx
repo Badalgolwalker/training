@@ -13,24 +13,28 @@ const EditProduct = () => {
     stock: '',
     status: ''
   });
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(true); // State for loading indicator
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post(`http://localhost:3000/product/readsingle/${id}`);
-        setProduct(response.data); // Assuming response.data is an object with fields matching your product state
-        setLoading(false); // Set loading to false after data is fetched
-
-        console.log(response.data)
+        setProduct({
+          productname: response.data.name || '', // Ensure ke response me name field properly map ho
+          price: response.data.price || '',
+          description: response.data.description || '',
+          stock: response.data.stock || '',
+          status: response.data.status || ''
+        });
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching product:', error);
-        setLoading(false); // Set loading to false in case of error
+        setLoading(false);
       }
     };
     fetchData();
-  }, [id]); // Include id in the dependency array for useEffect
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,83 +47,93 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3000/product/update/${id}`, product);
-     
-      toast.success("product upadte successfullt")
-      
+      await axios.post(`http://localhost:3000/product/update/${id}`, product);
+      toast.success("Product updated successfully");
+
       setTimeout(() => {
-        navigate("/")
+        navigate("/");
       }, 1500);
-      // Optionally, redirect or show a success message
     } catch (error) {
       console.error('Error updating product:', error);
-      // Handle error state or display error message
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading indicator while waiting for data
+    return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>Edit Product</h1>
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md mt-10">
+      <h1 className="text-2xl font-bold mb-6">Edit Product</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="productname">Product Name</label>
+        <div className="mb-4">
+          <label htmlFor="productname" className="block text-gray-700">Product Name</label>
           <input
             type="text"
             id="productname"
             name="productname"
-            value={product.productname}
+            value={product.productname} // Corrected to productname
             onChange={handleChange}
-            placeholder={product.productname}
-
+            placeholder="Enter product name"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label htmlFor="price">Price</label>
+        <div className="mb-4">
+          <label htmlFor="price" className="block text-gray-700">Price</label>
           <input
             type="text"
             id="price"
             name="price"
             value={product.price}
             onChange={handleChange}
+            placeholder="Enter product price"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label htmlFor="description">Description</label>
+        <div className="mb-4">
+          <label htmlFor="description" className="block text-gray-700">Description</label>
           <input
             type="text"
             id="description"
             name="description"
             value={product.description}
             onChange={handleChange}
+            placeholder="Enter product description"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label htmlFor="stock">Stock</label>
+        <div className="mb-4">
+          <label htmlFor="stock" className="block text-gray-700">Stock</label>
           <input
             type="text"
             id="stock"
             name="stock"
             value={product.stock}
             onChange={handleChange}
+            placeholder="Enter product stock"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label htmlFor="status">Status</label>
+        <div className="mb-4">
+          <label htmlFor="status" className="block text-gray-700">Status</label>
           <input
             type="text"
             id="status"
             name="status"
             value={product.status}
             onChange={handleChange}
+            placeholder="Enter product status"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
           />
         </div>
-        <button type="submit">Update Product</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          Update Product
+        </button>
       </form>
-      <ToastContainer position="top-center"  />
+      <ToastContainer position="top-center" />
     </div>
   );
 };
